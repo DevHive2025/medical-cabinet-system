@@ -18,6 +18,31 @@ class User extends Authenticatable
         'role'
     ]; 
 
+    const ROLE_ADMIN = 'admin';
+    const ROLE_MEDECIN = 'medecin';
+    const ROLE_SECRETAIRE = 'secretaire';
+    const ROLE_PATIENT = 'patient';
+
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isMedecin(): bool
+    {
+        return $this->role === self::ROLE_MEDECIN;
+    }
+
+    public function isSecretaire(): bool
+    {
+        return $this->role === self::ROLE_SECRETAIRE;
+    }
+
+    public function isPatient(): bool
+    {
+        return $this->role === self::ROLE_PATIENT;
+    }
+
     public function medecin() {
         return $this->hasOne(Medecin::class);
     }

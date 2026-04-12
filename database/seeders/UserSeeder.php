@@ -25,8 +25,6 @@ class UserSeeder extends Seeder
         Medecin::create([
             'user_id' => $medecinUser->id,
             'specialite' => 'Cardiologie',
-            'matricule' => 'MED-2026-001',
-            'disponibilites' => 'Lundi au Vendredi: 09h-17h',
         ]);
 
         $patientUser = User::create([
@@ -39,10 +37,9 @@ class UserSeeder extends Seeder
 
         Patient::create([
             'user_id' => $patientUser->id,
-            'num_securite_sociale' => '1950000000',
+            'cin' => 'EE123456',
             'date_naissance' => '1998-05-15',
             'telephone' => '0661223344',
-            'adresse' => 'Quartier Al Mansour, Marrakech',
         ]);
 
         $secretaireUser = User::create([
