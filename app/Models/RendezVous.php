@@ -14,8 +14,12 @@ class RendezVous extends Model
         return $this->belongsTo(Patient::class);
     }
 
+    public function medecin() {
+        return $this->belongsTo(Medecin::class);
+    }
+
     public function consultation() {
-        return $this->hasOne(Consultation::class); // [cite: 44]
+        return $this->hasOne(Consultation::class);
     }
 }
 ?>
