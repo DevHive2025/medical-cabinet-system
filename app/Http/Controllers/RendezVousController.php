@@ -62,7 +62,7 @@ class RendezVousController extends Controller
 
         return redirect()->route('rendez-vous.index')->with('success', 'Rendez-vous mis à jour.');
     }
-
+ 
     // Annulation rapide
     public function annuler($id)
     {

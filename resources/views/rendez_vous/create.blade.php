@@ -48,3 +48,4 @@
         <a href="{{ route('rendez-vous.index') }}" class="btn btn-secondary">Annuler</a>
     </form>
 </div>
+ 

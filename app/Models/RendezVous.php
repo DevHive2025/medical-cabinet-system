@@ -20,6 +20,6 @@ class RendezVous extends Model
     }
 
     public function medecin() {
-        return $this->belongsTo(User::class, 'medecin_id');
+        return $this->belongsTo(User::class, 'medecin_id'); 
     }
 }

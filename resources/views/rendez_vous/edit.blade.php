@@ -27,5 +27,5 @@
 
         <button type="submit" class="btn btn-primary">Mettre à jour</button>
         <a href="{{ route('rendez-vous.index') }}" class="btn btn-secondary">Retour</a>
-    </form>
+    </form> 
 </div>
