@@ -28,6 +28,7 @@ class ProfileUpdateRequest extends FormRequest
             ],
         ];
 
+        // PATIENT INFO
         if ($this->user()->patient) {
             $rules['cin'] = ['required', 'string', 'max:20'];
             $rules['telephone'] = ['required', 'string', 'max:20'];
@@ -38,6 +39,7 @@ class ProfileUpdateRequest extends FormRequest
             $rules['date_naissance'] = ['nullable'];
         }
 
+        // MEDECIN INFO
         if ($this->user()->medecin) {
             $rules['specialite'] = ['required', 'string', 'max:255'];
         } else {

@@ -52,8 +52,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('rendez-vous', RendezVousController::class);
     Route::patch('/rendez-vous/{id}/annuler', [RendezVousController::class, 'annuler'])->name('rendez-vous.annuler');
+    Route::resource('patients', App\Http\Controllers\controllerPatient::class);
+    Route::resource('dossierMedical', App\Http\Controllers\controllerDossierMedical::class);
 
 });
 
 require __DIR__.'/auth.php';
+
+
+
 
