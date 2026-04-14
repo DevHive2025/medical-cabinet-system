@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('ordonnances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('consultation_id')->constrained('consultations')->onDelete('cascade');
-            $table->date('date_emission');
-            $table->text('contenu_medicaments');
-            $table->string('duree_traitement');
+            $table->string('reference')->unique();
+            $table->date('date_ordonnance');
             $table->timestamps();
         });
     }

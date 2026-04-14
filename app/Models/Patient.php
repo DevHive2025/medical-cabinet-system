@@ -19,6 +19,10 @@ class Patient extends Model
 
     public function rendezVous() {
         return $this->hasMany(RendezVous::class); 
+    } 
+    
+    public function consultations(){
+        return $this->hasManyThrough(Consultation::class, RendezVous::class);
     }
 }
 ?>

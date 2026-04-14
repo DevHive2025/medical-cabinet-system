@@ -1,9 +1,4 @@
-@extends('layouts.app')
-
-@section('title', 'Nouveau Patient')
-
-@section('content')
-
+<x-app-layout>
 <div class="flex items-center justify-between mb-6">
     <h2 class="text-2xl font-bold text-gray-800">Créer un Patient</h2>
     <a href="{{ route('patients.index') }}" class="text-green-600 hover:underline text-sm">← Retour à la liste</a>
@@ -76,4 +71,4 @@
     </form>
 </div>
 
-@endsection
+</x-app-layout>

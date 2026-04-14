@@ -10,7 +10,10 @@ Route::get('/', function () {
         ? redirect()->route('dashboard')
         : view('welcome');
 });
+Route::get('/home', function () {
 
+    return view('home');
+})->name('home');
 Route::middleware('auth')->get('/dashboard', function () {
     $user = auth()->user();
 
@@ -53,7 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('rendez-vous', RendezVousController::class);
     Route::patch('/rendez-vous/{id}/annuler', [RendezVousController::class, 'annuler'])->name('rendez-vous.annuler');
     Route::resource('patients', App\Http\Controllers\controllerPatient::class);
-    Route::resource('dossierMedical', App\Http\Controllers\controllerDossierMedical::class);
+    Route::resource('dossierMedical', App\Http\Controllers\DossierMedicalController::class);
 
 });
 

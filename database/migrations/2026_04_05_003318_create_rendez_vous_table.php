@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('rendez_vous', function (Blueprint $table) {
             $table->id(); 
             $table->dateTime('date_heure'); 
-            $table->string('statut')->default('en_attente');
+            $table->enum('statut', ['en_attente', 'confirme', 'annule', 'termine'])->default('en_attente');
             $table->string('motif'); 
             
             $table->foreignId('patient_id')->constrained('patients');

@@ -1,51 +1,86 @@
-<div class="container mt-4">
-    <h2>Prendre un nouveau Rendez-vous</h2>
-    
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+<x-app-layout>
+    <div class="max-w-4xl mx-auto">
 
-    <form action="{{ route('rendez-vous.store') }}" method="POST" class="mt-3">
-        @csrf
-        
-        <div class="mb-3">
-            <label class="form-label">Patient</label>
-            <select name="patient_id" class="form-select" required>
-                <option value="">Sélectionnez un patient</option>
-                @foreach($patients as $patient)
-                    <option value="{{ $patient->id }}">{{ $patient->nom }} {{ $patient->prenom }}</option>
-                @endforeach
-            </select>
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Prendre un nouveau Rendez-vous</h2>
+            <a href="{{ route('rendez-vous.index') }}"
+               class="text-sm text-gray-600 hover:text-gray-900">
+                ← Retour
+            </a>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Médecin</label>
-            <select name="medecin_id" class="form-select" required>
-                <option value="">Sélectionnez un médecin</option>
-                @foreach($medecins as $medecin)
-                    <option value="{{ $medecin->id }}">Dr. {{ $medecin->name }}</option>
-                @endforeach
-            </select>
-        </div>
+        @if ($errors->any())
+            <div class="mb-4 bg-red-100 text-red-700 px-4 py-3 rounded-lg text-sm">
+                <ul class="list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <div class="mb-3">
-            <label class="form-label">Date et Heure</label>
-            <input type="datetime-local" name="date_heure" class="form-control" required>
-        </div>
+        <form action="{{ route('rendez-vous.store') }}" method="POST"
+              class="bg-white rounded-xl shadow p-6 space-y-5">
+            @csrf
 
-        <div class="mb-3">
-            <label class="form-label">Motif (Optionnel)</label>
-            <textarea name="motif" class="form-control" rows="3"></textarea>
-        </div>
+            <!-- Patient -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Patient</label>
+                <select name="patient_id"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+                        required>
+                    <option value="">Sélectionnez un patient</option>
+                    @foreach($patients as $patient)
+                        <option value="{{ $patient->id }}">
+                            {{ $patient->user->nom }} {{ $patient->user->prenom }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-        <button type="submit" class="btn btn-success">Enregistrer le RDV</button>
-        <a href="{{ route('rendez-vous.index') }}" class="btn btn-secondary">Annuler</a>
-    </form>
-</div>
- 
+            <!-- Médecin -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Médecin</label>
+                <select name="medecin_id"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+                        required>
+                    <option value="">Sélectionnez un médecin</option>
+                    @foreach($medecins as $medecin)
+                        <option value="{{ $medecin->id }}">
+                            Dr. {{ $medecin->user->nom ?? $medecin->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Date -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Date et Heure</label>
+                <input type="datetime-local" name="date_heure"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+                       required>
+            </div>
+
+            <!-- Motif -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Motif (Optionnel)</label>
+                <textarea name="motif" rows="3"
+                          class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"></textarea>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 pt-2">
+                <button type="submit"
+                        class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg text-sm font-medium transition">
+                    Enregistrer
+                </button>
+
+                <a href="{{ route('rendez-vous.index') }}"
+                   class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg text-sm font-medium transition">
+                    Annuler
+                </a>
+            </div>
+
+        </form>
+    </div>
+</x-app-layout>

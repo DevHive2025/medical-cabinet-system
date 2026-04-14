@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('rendez_vous_id')->constrained('rendez_vous')->onDelete('cascade');
             $table->date('date');
+            $table->text('symptomes');
             $table->text('compte_rendu');
             $table->string('diagnostic');
-            $table->foreignId('rendez_vous_id')->constrained('rendez_vous')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

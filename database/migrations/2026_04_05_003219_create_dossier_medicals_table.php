@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('dossier_medicals', function (Blueprint $table) {
             $table->id(); 
-            $table->foreignId('patient_id')->unique()->constrained('patients')->onDelete('cascade');
-            $table->text('historique')->nullable(); 
+            $table->foreignId('patient_id')->unique()->constrained('patients')->onDelete('cascade'); 
+            $table->string('groupe_sanguin')->nullable();
+            $table->string('maladies_chroniques')->nullable();
             $table->text('antecedents')->nullable(); 
             $table->text('allergies')->nullable(); 
             $table->timestamps();

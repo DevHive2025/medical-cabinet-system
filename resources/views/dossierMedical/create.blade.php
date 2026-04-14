@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('title', 'Nouveau Dossier Médical')
-
-@section('content')
+<x-app-layout>
 
 <div class="flex items-center justify-between mb-6">
     <h2 class="text-2xl font-bold text-gray-800">Créer un Dossier Médical</h2>
@@ -27,12 +23,6 @@
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Historique</label>
-            <textarea name="historique" rows="4"
-                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400">{{ old('historique') }}</textarea>
-        </div>
-
-        <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Antécédents</label>
             <textarea name="antecedents" rows="4"
                 class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400">{{ old('antecedents') }}</textarea>
@@ -44,10 +34,32 @@
                 class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400">{{ old('allergies') }}</textarea>
         </div>
 
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Maladies Chroniques</label>
+            <textarea name="maladies_chroniques" rows="3"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400">{{ old('maladies_chroniques') }}</textarea>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Groupe Sanguin</label>
+            <select name="groupe_sanguin"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+                <option value="">-- Sélectionner --</option>
+                <option value="A+" {{ old('groupe_sanguin') == 'A+' ? 'selected' : '' }}>A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+        </div>
+
         <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition">
             Enregistrer
         </button>
     </form>
 </div>
 
-@endsection
+</x-app-layout>

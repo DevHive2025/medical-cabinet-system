@@ -9,14 +9,17 @@ class Ordonnance extends Model
 
     protected $fillable = [
         'consultation_id',
-        'date_emission',
-        'contenu_medicaments',
-        'duree_traitement',
+        'reference',
+        'date_ordonnance',
     ];
 
     public function consultation()
     {
         return $this->belongsTo(Consultation::class);
+    }
+    public function lignes()
+    {
+        return $this->hasMany(OrdonnanceLigne::class);
     }
 
     public function genererPDF()
