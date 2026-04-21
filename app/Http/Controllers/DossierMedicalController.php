@@ -10,14 +10,13 @@ class DossierMedicalController extends Controller // بدلت السمية لـ 
 {
     public function index()
     {
-        // كنستعملو with('patient.user') باش نتفاداو مشكل N+1 query
         $dossiers = DossierMedical::with('patient.user')->get();
         return view('dossierMedical.index', compact('dossiers'));
     }
 
     public function create()
     {
-        // كنصيفطو غير المرضى اللي مازال ماعندهمش dossier (حيت العلاقة unique)
+        
         $patients = Patient::doesntHave('dossierMedical')->with('user')->get();
         return view('dossierMedical.create', compact('patients'));
     }

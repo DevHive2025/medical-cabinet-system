@@ -29,14 +29,17 @@
                 <select name="statut"
                         class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
                         required>
-                    <option value="en attente" {{ $rdv->statut == 'en attente' ? 'selected' : '' }}>
+                    <option value="en_attente" {{ $rdv->statut == 'en_attente' ? 'selected' : '' }}>
                         En attente
                     </option>
-                    <option value="confirmé" {{ $rdv->statut == 'confirmé' ? 'selected' : '' }}>
+                    <option value="confirme" {{ $rdv->statut == 'confirme' ? 'selected' : '' }}>
                         Confirmé
                     </option>
-                    <option value="annulé" {{ $rdv->statut == 'annulé' ? 'selected' : '' }}>
+                    <option value="annule" {{ $rdv->statut == 'annule' ? 'selected' : '' }}>
                         Annulé
+                    </option>
+                    <option value="termine" {{ $rdv->statut == 'termine' ? 'selected' : '' }}>
+                        Terminé
                     </option>
                 </select>
             </div>

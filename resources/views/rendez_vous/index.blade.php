@@ -43,17 +43,21 @@
                 </td>
 
                 <td class="px-6 py-4 text-gray-600">
-                    Dr. {{ $rdv->medecin->nom ?? $rdv->medecin->name ?? 'Inconnu' }}
+                    Dr. {{ $rdv->medecin->user->nom ?? 'Inconnu' }} {{ $rdv->medecin->user->prenom ?? '' }}
                 </td>
 
                 <td class="px-6 py-4">
-                    @if($rdv->statut == 'confirmé')
+                    @if($rdv->statut == 'confirme')
                         <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
                             Confirmé
                         </span>
-                    @elseif($rdv->statut == 'annulé')
+                    @elseif($rdv->statut == 'annule')
                         <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
                             Annulé
+                        </span>
+                    @elseif($rdv->statut == 'termine')
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
+                            Terminé
                         </span>
                     @else
                         <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-medium">
@@ -69,18 +73,20 @@
                         Modifier
                     </a>
 
-                    @if($rdv->statut != 'annulé')
-                    <form action="{{ route('rendez-vous.annuler', $rdv->id) }}" method="POST">
+                    <form action="{{ route('rendez-vous.status', $rdv->id) }}" method="POST" class="flex items-center gap-2">
                         @csrf
                         @method('PATCH')
-
+                        <select name="statut" class="border border-gray-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-green-400">
+                            <option value="en_attente" {{ $rdv->statut == 'en_attente' ? 'selected' : '' }}>En attente</option>
+                            <option value="confirme" {{ $rdv->statut == 'confirme' ? 'selected' : '' }}>Confirmé</option>
+                            <option value="annule" {{ $rdv->statut == 'annule' ? 'selected' : '' }}>Annulé</option>
+                            <option value="termine" {{ $rdv->statut == 'termine' ? 'selected' : '' }}>Terminé</option>
+                        </select>
                         <button type="submit"
-                            onclick="return confirm('Voulez-vous vraiment annuler ce rendez-vous ?')"
-                            class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded text-xs font-medium transition">
-                            Annuler
+                            class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded text-xs font-medium transition">
+                            Changer
                         </button>
                     </form>
-                    @endif
 
                 </td>
 

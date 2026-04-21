@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RendezVous;
 use App\Models\Patient;
-use App\Models\User; // Pour les médecins
+use App\Models\Medecin;
 use Illuminate\Http\Request;
 
 class RendezVousController extends Controller
@@ -11,15 +11,15 @@ class RendezVousController extends Controller
     // Affichage de la liste (Table simple)
     public function index()
     {
-        $rdvs = RendezVous::with(['patient', 'medecin'])->orderBy('date_heure', 'asc')->get();
+        $rdvs = RendezVous::with(['patient.user', 'medecin.user'])->orderBy('date_heure', 'asc')->get();
         return view('rendez_vous.index', compact('rdvs'));
     }
 
     // Formulaire de création
     public function create()
     {
-        $patients = Patient::all();
-        $medecins = User::where('role', 'medecin')->get(); // Supposant un champ role
+        $patients = Patient::with('user')->get();
+        $medecins = Medecin::with('user')->get();
         return view('rendez_vous.create', compact('patients', 'medecins'));
     }
 
@@ -28,13 +28,13 @@ class RendezVousController extends Controller
     {
         $validated = $request->validate([
             'patient_id' => 'required|exists:patients,id',
-            'medecin_id' => 'required|exists:users,id',
+            'medecin_id' => 'required|exists:medecins,id',
             'date_heure' => 'required|date|after:now',
             'motif' => 'nullable|string',
         ]);
 
         // Statut par défaut : 'en attente'
-        RendezVous::create(array_merge($validated, ['statut' => 'en attente']));
+        RendezVous::create(array_merge($validated, ['statut' => 'en_attente']));
 
         return redirect()->route('rendez-vous.index')->with('success', 'Rendez-vous créé avec succès.');
     }
@@ -43,8 +43,8 @@ class RendezVousController extends Controller
     public function edit($id)
     {
         $rdv = RendezVous::findOrFail($id);
-        $patients = Patient::all();
-        $medecins = User::where('role', 'medecin')->get();
+        $patients = Patient::with('user')->get();
+        $medecins = Medecin::with('user')->get();
         return view('rendez_vous.edit', compact('rdv', 'patients', 'medecins'));
     }
 
@@ -54,7 +54,7 @@ class RendezVousController extends Controller
         $rdv = RendezVous::findOrFail($id);
         $validated = $request->validate([
             'date_heure' => 'required|date',
-            'statut' => 'required|in:en attente,confirmé,annulé',
+            'statut' => 'required|in:en_attente,confirme,annule,termine',
             'motif' => 'nullable|string',
         ]);
 
@@ -67,7 +67,20 @@ class RendezVousController extends Controller
     public function annuler($id)
     {
         $rdv = RendezVous::findOrFail($id);
-        $rdv->update(['statut' => 'annulé']);
+        $rdv->update(['statut' => 'annule']);
         return back()->with('success', 'Le rendez-vous a été annulé.');
+    }
+
+    // Changement rapide du statut depuis la liste
+    public function updateStatus(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'statut' => 'required|in:en_attente,confirme,annule,termine',
+        ]);
+
+        $rdv = RendezVous::findOrFail($id);
+        $rdv->update(['statut' => $validated['statut']]);
+
+        return back()->with('success', 'Statut du rendez-vous mis à jour.');
     }
 }
