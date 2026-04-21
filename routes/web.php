@@ -3,7 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RendezVousController;
-
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\StatsController;
+use App\Http\Controllers\Admin\DashboardController;
 Route::get('/', function () {
 
     return auth()->check()
@@ -12,7 +14,7 @@ Route::get('/', function () {
 });
 Route::get('/home', function () {
 
-    return view('home');
+    return view('landing');
 })->name('home');
 Route::middleware('auth')->get('/dashboard', function () {
     $user = auth()->user();
@@ -26,9 +28,10 @@ Route::middleware('auth')->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::resource('users', UserController::class);
+    Route::get('/stats', [StatsController::class, 'index'])->name('admin.stats');
+    
 });
 
 Route::middleware(['auth', 'role:medecin'])->prefix('medecin')->group(function () {

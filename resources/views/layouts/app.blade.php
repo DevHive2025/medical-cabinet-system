@@ -122,15 +122,13 @@
         </header>
 
         <!-- PAGE CONTENT CONTAINER -->
-        <main class="flex-1 overflow-y-auto p-6 md:p-8">
-            <div class="max-w-[85rem] mx-auto w-full">
-                <!-- Wrapper for glassmorphism / card feel -->
-                <div class="bg-white/60 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 lg:p-10 shadow-sm w-full min-h-[calc(100vh-10rem)]">
-                    {{ $slot }}
-                </div>
-            </div>
-        </main>
+        <main class="flex-1 overflow-y-auto p-2"> 
+    
+    <div class="bg-white/60 backdrop-blur-xl border border-white rounded-[1.5rem] p-4 shadow-sm w-full min-h-[calc(100vh-2rem)]">
+        {{ $slot }}
+    </div>
 
+</main>
     </div>
 
 </div>

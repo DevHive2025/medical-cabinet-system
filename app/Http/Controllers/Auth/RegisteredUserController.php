@@ -52,11 +52,13 @@ class RegisteredUserController extends Controller
             'cin' => $request->cin,
             'date_naissance' => $request->date_naissance,
             'telephone' => $request->telephone,
+            'genre' => 'homme', // Valeur par défaut, peut être modifiée plus tard
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
+
 
         return redirect('/patient/dashboard');
     }

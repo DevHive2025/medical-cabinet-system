@@ -36,19 +36,19 @@ class UserSeeder extends Seeder
 
         // 4 Patients avec des données réelles
         $patientsData = [
-            ['nom' => 'Amrani', 'prenom' => 'Omar', 'email' => 'o.amrani@gmail.com', 'cin' => 'EE123456', 'tel' => '0661223344', 'gs' => 'O+'],
-            ['nom' => 'Bennani', 'prenom' => 'Khadija', 'email' => 'k.bennani@gmail.com', 'cin' => 'JK889900', 'tel' => '0661556677', 'gs' => 'A-'],
-            ['nom' => 'Zouhair', 'prenom' => 'Mohamed', 'email' => 'm.zouhair@gmail.com', 'cin' => 'CD445566', 'tel' => '0661889900', 'gs' => 'B+'],
-            ['nom' => 'Chami', 'prenom' => 'Sanaa', 'email' => 's.chami@gmail.com', 'cin' => 'AE112233', 'tel' => '0661001122', 'gs' => 'AB+'],
-        ];
+            ['nom' => 'Amrani', 'prenom' => 'Omar', 'email' => 'o.amrani@gmail.com', 'cin' => 'EE123456','date_naissance' => '1985-06-15', 'genre' => 'homme', 'tel' => '0661223344', 'gs' => 'O+'],
+            ['nom' => 'Bennani', 'prenom' => 'Khadija', 'email' => 'k.bennani@gmail.com', 'cin' => 'JK889900', 'date_naissance' => '1999-06-15', 'genre' => 'femme', 'tel' => '0661556677', 'gs' => 'A-'],
+            ['nom' => 'Zouhair', 'prenom' => 'Mohamed', 'email' => 'm.zouhair@gmail.com', 'cin' => 'CD445566', 'date_naissance' => '2004-06-15', 'genre' => 'homme', 'tel' => '0661889900', 'gs' => 'B+'],
+            ['nom' => 'Chami', 'prenom' => 'Sanaa', 'email' => 's.chami@gmail.com', 'cin' => 'AE112233', 'date_naissance' => '1990-06-15', 'genre' => 'femme', 'tel' => '0661001122', 'gs' => 'AB+'],
 
+        ];
         foreach ($patientsData as $data) {
             $u = User::create([
                 'nom' => $data['nom'], 'prenom' => $data['prenom'],
                 'email' => $data['email'], 'password' => bcrypt('password'), 'role' => 'patient'
             ]);
             $p = $u->patient()->create([
-                'cin' => $data['cin'], 'date_naissance' => '1985-06-15', 'telephone' => $data['tel']
+                'cin' => $data['cin'], 'date_naissance' => $data['date_naissance'], 'telephone' => $data['tel'], 'genre' => $data['genre']
             ]);
             $p->dossierMedical()->create([
                 'groupe_sanguin' => $data['gs'],

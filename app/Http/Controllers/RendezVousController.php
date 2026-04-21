@@ -34,7 +34,7 @@ class RendezVousController extends Controller
         ]);
 
         // Statut par défaut : 'en attente'
-        RendezVous::create(array_merge($validated, ['statut' => 'en attente']));
+        RendezVous::create($validated);
 
         return redirect()->route('rendez-vous.index')->with('success', 'Rendez-vous créé avec succès.');
     }

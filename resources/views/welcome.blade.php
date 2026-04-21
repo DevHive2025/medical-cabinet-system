@@ -3,48 +3,61 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MediCare</title>
+    <title>MediCare - Home</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .hero-gradient {
+            background: radial-gradient(circle at 20% 30%, #134e4a 0%, #0d9488 40%, #0f766e 70%, #115e59 100%);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .animate-float {
+            animation: float 6s infinite ease-in-out;
+        }
+    </style>
 </head>
 
-<body class="bg-white text-gray-900">
+<body class="bg-[#0d9488] antialiased overflow-hidden">
 
-<!-- NAVBAR -->
-<header class="border-b bg-white">
-    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+<!-- HEADER -->
+<header class="absolute w-full z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-6">
 
-        <!-- LOGO (Lucide Activity Icon) -->
-        <div class="flex items-center gap-2 font-bold text-xl text-blue-600">
-
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 width="24" height="24" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor"
-                 stroke-width="2" stroke-linecap="round"
-                 stroke-linejoin="round"
-                 class="w-7 h-7 text-blue-600">
-                <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
-            </svg>
-
-            MediCare
+        <div class="flex items-center gap-2">
+            <div class="bg-white p-2 rounded-xl shadow-lg">
+                <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path>
+                </svg>
+            </div>
+            <span class="text-2xl font-extrabold text-white">MediCare</span>
         </div>
 
-        <!-- NAV -->
-        <nav class="hidden md:flex gap-8 text-gray-600">
-            <a href="#" class="hover:text-blue-600">Home</a>
-            <a href="#" class="hover:text-blue-600">Services</a>
-            <a href="#" class="hover:text-blue-600">About</a>
-            <a href="#" class="hover:text-blue-600">Contact</a>
+        <nav class="hidden md:flex gap-8">
+            <a href="#" class="text-white/90 hover:text-white">Home</a>
+            <a href="#" class="text-white/80 hover:text-white">Services</a>
+            <a href="#" class="text-white/80 hover:text-white">Doctors</a>
+            <a href="#" class="text-white/80 hover:text-white">Contact</a>
         </nav>
 
-        <!-- AUTH -->
         <div class="flex items-center gap-4">
-            <a href="{{ route('login') }}" class="text-gray-600 hover:text-blue-600">
-                Login
-            </a>
-
-            <a href="{{ route('register') }}"
-               class="px-5 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700">
+            <a href="{{ route('login') }}" class="text-white font-semibold">Login</a>
+            <a href="{{ route('register') }}" class="px-5 py-2 bg-white text-teal-700 rounded-full font-bold shadow-lg">
                 Register
             </a>
         </div>
@@ -53,88 +66,80 @@
 </header>
 
 <!-- HERO -->
-<section class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-10 items-center">
+<section class="hero-gradient h-screen flex items-center relative overflow-hidden">
 
-    <!-- LEFT SIDE -->
-    <div>
-        <h1 class="text-5xl font-bold leading-tight">
-            Manage your medical <br>
-            <span class="text-blue-600">appointments easily</span>
-        </h1>
+    <!-- background glow -->
+    <div class="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-teal-400/20 rounded-full blur-[120px]"></div>
 
-        <p class="mt-6 text-gray-600 text-lg">
-            A modern platform to book appointments, manage medical records, and connect with healthcare professionals seamlessly.
-        </p>
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10 pt-24">
 
-        <div class="mt-8 flex gap-4">
+        <!-- LEFT -->
+        <div class="space-y-6">
+
+            <div class="glass-effect px-4 py-2 rounded-full text-teal-50 text-sm inline-flex items-center gap-2">
+                <span class="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></span>
+                Trusted by 4,000+ Patients
+            </div>
+
+            <h1 class="text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+                Take care of <br>
+                <span class="bg-gradient-to-r from-teal-200 to-white bg-clip-text text-transparent">
+                    your health
+                </span> online
+            </h1>
+
+            <p class="text-teal-100 text-base max-w-md">
+                Manage appointments, access records, and connect with doctors easily.
+            </p>
+
             <a href="{{ route('register') }}"
-               class="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700">
+               class="inline-block px-8 py-3 bg-[#2dd4bf] text-[#042f2e] rounded-xl font-bold shadow-xl hover:bg-white transition">
                 Book Appointment
             </a>
 
-            <a href="{{ route('login') }}"
-               class="px-6 py-3 border rounded-xl hover:bg-gray-50">
-                Login
-            </a>
-        </div>
-    </div>
-
-    <!-- RIGHT SIDE CARDS -->
-    <div class="space-y-4">
-
-        <!-- CARD 1 -->
-        <div class="flex items-center gap-4 p-5 rounded-2xl bg-blue-50">
-            <div class="p-3 bg-blue-600 text-white rounded-xl">
-                <!-- Calendar -->
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                     viewBox="0 0 24 24" stroke-width="1.5"
-                     stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M8.25 6V4.5m7.5 1.5V4.5M3.75 9h16.5M4.5 6.75h15A2.25 2.25 0 0118 9v9.75A2.25 2.25 0 0115.75 21h-7.5A2.25 2.25 0 016 18.75V9a2.25 2.25 0 012.25-2.25z" />
-                </svg>
-            </div>
-            <div>
-                <h3 class="font-semibold">Easy Scheduling</h3>
-                <p class="text-sm text-gray-600">Book appointments 24/7</p>
-            </div>
         </div>
 
-        <!-- CARD 2 -->
-        <div class="flex items-center gap-4 p-5 rounded-2xl bg-green-50">
-            <div class="p-3 bg-green-600 text-white rounded-xl">
-                <!-- Document -->
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                     viewBox="0 0 24 24" stroke-width="1.5"
-                     stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125V5.25m0 0V3.375m0 1.875h-3A2.625 2.625 0 007.875 7.875v9.75A2.625 2.625 0 0010.5 20.25h3A2.625 2.625 0 0016.125 17.625V14.25" />
-                </svg>
-            </div>
-            <div>
-                <h3 class="font-semibold">Digital Records</h3>
-                <p class="text-sm text-gray-600">Access anytime, anywhere</p>
-            </div>
-        </div>
+        <!-- RIGHT -->
+        <div class="relative flex justify-center">
 
-        <!-- CARD 3 -->
-        <div class="flex items-center gap-4 p-5 rounded-2xl bg-purple-50">
-            <div class="p-3 bg-purple-600 text-white rounded-xl">
-                <!-- Heart -->
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                     viewBox="0 0 24 24" stroke-width="1.5"
-                     stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733C11.285 4.876 9.623 3.75 7.688 3.75 5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                </svg>
+            <!-- glow -->
+
+            <div class="relative z-10 w-full max-w-[420px]">
+
+                <!-- image -->
+                <img src="https://pngimg.com/uploads/doctor/doctor_PNG16041.png"
+                alt="Doctor"
+                class="w-full object-contain drop-shadow-[0_50px_80px_rgba(0,0,0,0.45)]
+                        ">
+
+                <!-- blend gradient -->
+                <div class="absolute inset-0 
+                            bg-gradient-to-t from-[#0d9488]/50 to-transparent
+                            pointer-events-none"></div>
+
+                <!-- floating card -->
+                <div class="absolute bottom-10 left-0 
+                            bg-white px-4 py-3 rounded-xl shadow-2xl 
+                            flex items-center gap-3 animate-float">
+
+                    <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-width="2.5" d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </div>
+
+                    <div>
+                        <p class="text-xs text-teal-600 font-bold">Professional</p>
+                        <p class="text-sm font-bold text-gray-900">Certified Doctors</p>
+                    </div>
+
+                </div>
+
             </div>
-            <div>
-                <h3 class="font-semibold">Health Tracking</h3>
-                <p class="text-sm text-gray-600">Monitor your progress</p>
-            </div>
+
         </div>
 
     </div>
-
 </section>
 
 </body>

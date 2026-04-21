@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Patient extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'cin', 'date_naissance', 'telephone']; 
+    protected $fillable = ['user_id', 'cin','genre', 'date_naissance', 'telephone']; 
 
     public function user() {
         return $this->belongsTo(User::class);
