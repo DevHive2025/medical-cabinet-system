@@ -38,6 +38,7 @@ Route::middleware(['auth', 'role:medecin'])->prefix('medecin')->group(function (
     Route::get('/dashboard', function () {
         return view('medecin.dashboard');
     })->name('medecin.dashboard');
+    
 });
 
 Route::middleware(['auth', 'role:secretaire'])->prefix('secretaire')->group(function () {
@@ -51,13 +52,19 @@ Route::middleware(['auth', 'role:patient'])->prefix('patient')->group(function (
         return view('patient.dashboard');
     })->name('patient.dashboard');
 });
+Route::get('/rendez-vous/confirmer/{id}', [App\Http\Controllers\RendezVousController::class, 'confirmerParEmail'])
+    ->name('rendez-vous.confirmer');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('rendez-vous', RendezVousController::class);
+    Route::patch('/rendez-vous/{id}/Sconfirmer', [RendezVousController::class, 'confirmer'])->name('rendez-vous.Sconfirmer');
     Route::patch('/rendez-vous/{id}/annuler', [RendezVousController::class, 'annuler'])->name('rendez-vous.annuler');
+    Route::get('/rendez-vous/calendrier', [RendezVousController::class, 'calendrier'])->name('rendez-vous.calendrier');
+    Route::get('/api/medecins-par-specialite', [RendezVousController::class, 'getMedecinsParSpecialite'])->name('api.medecins');
+    Route::get('/api/creneaux-disponibles', [RendezVousController::class, 'getCreneauxDisponibles'])->name('api.creneaux');
+    Route::resource('rendez-vous', RendezVousController::class);
     Route::resource('patients', App\Http\Controllers\controllerPatient::class);
     Route::resource('dossierMedical', App\Http\Controllers\DossierMedicalController::class);
 
