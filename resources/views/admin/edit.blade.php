@@ -1,4 +1,4 @@
-<x-admin-layout>
+<x-app-layout>
     <div class="max-w-4xl mx-auto py-10 px-4">
         <div class="flex items-center justify-between mb-8">
             <div>
@@ -96,4 +96,4 @@
             }
         });
     </script>
-</x-admin-layout>
+</x-app-layout>

@@ -51,6 +51,7 @@ Route::middleware(['auth', 'role:patient'])->prefix('patient')->group(function (
     Route::get('/dashboard', function () {
         return view('patient.dashboard');
     })->name('patient.dashboard');
+    Route::resource('rendez-vous', RendezVousController::class);
 });
 Route::get('/rendez-vous/confirmer/{id}', [App\Http\Controllers\RendezVousController::class, 'confirmerParEmail'])
     ->name('rendez-vous.confirmer');
@@ -64,7 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/rendez-vous/calendrier', [RendezVousController::class, 'calendrier'])->name('rendez-vous.calendrier');
     Route::get('/api/medecins-par-specialite', [RendezVousController::class, 'getMedecinsParSpecialite'])->name('api.medecins');
     Route::get('/api/creneaux-disponibles', [RendezVousController::class, 'getCreneauxDisponibles'])->name('api.creneaux');
-    Route::resource('rendez-vous', RendezVousController::class);
+    
     Route::resource('patients', App\Http\Controllers\controllerPatient::class);
     Route::resource('dossierMedical', App\Http\Controllers\DossierMedicalController::class);
 

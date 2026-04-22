@@ -1,4 +1,4 @@
-<x-admin-layout>
+<x-app-layout>
 
 <div class="p-1">
 

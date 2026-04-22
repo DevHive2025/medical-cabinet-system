@@ -1,4 +1,4 @@
-<x-admin-layout>
+<x-app-layout>
     <div class="max-w-5xl mx-auto py-8 px-4">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
     <div>
@@ -173,4 +173,4 @@
             </form>
         </div>
     </div>
-</x-admin-layout>
+</x-app-layout>

@@ -1,4 +1,4 @@
-<x-admin-layout>
+<x-app-layout>
 <div class="min-h-screen bg-gray-50 py-8 px-4">
     <div class="max-w-3xl mx-auto">
         
@@ -127,4 +127,4 @@
     // Lancer au chargement pour garder les champs affichés en cas d'erreur de validation
     window.onload = toggleFields;
 </script>
-</x-admin-layout>
+</x-app-layout>
