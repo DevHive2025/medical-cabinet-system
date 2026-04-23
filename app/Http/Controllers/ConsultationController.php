@@ -30,7 +30,10 @@ class ConsultationController extends Controller
     // Formulaire saisie compte-rendu
     public function create()
     {
-        return view('consultation.create');
+        $rendezVous = \App\Models\RendezVous::with('patient.user', 'medecin.user')
+            ->whereDoesntHave('consultation')
+            ->get();
+        return view('consultation.create', compact('rendezVous'));
     }
 
     // Enregistrer compte-rendu
@@ -72,24 +75,31 @@ class ConsultationController extends Controller
     public function edit($id)
     {
         $consultation = Consultation::findOrFail($id);
-        return view('consultation.edit', compact('consultation'));
+        $rendezVous   = \App\Models\RendezVous::with('patient.user', 'medecin.user')
+            ->where(function($q) use ($id) {
+                $q->whereDoesntHave('consultation')
+                  ->orWhereHas('consultation', fn($q2) => $q2->where('id', $id));
+            })->get();
+        return view('consultation.edit', compact('consultation', 'rendezVous'));
     }
 
     // Mettre à jour compte-rendu
     public function update(Request $request, $id)
     {
         $request->validate([
-            'date'         => 'required|date',
-            'symptomes'    => 'required|string',
-            'diagnostic'   => 'required|string',
-            'compte_rendu' => 'required|string',
+            'rendez_vous_id' => 'required|exists:rendez_vous,id',
+            'date'           => 'required|date',
+            'symptomes'      => 'required|string',
+            'diagnostic'     => 'required|string',
+            'compte_rendu'   => 'required|string',
         ]);
 
         Consultation::findOrFail($id)->update([
-            'date'         => $request->date,
-            'symptomes'    => $request->symptomes,
-            'diagnostic'   => $request->diagnostic,
-            'compte_rendu' => $request->compte_rendu,
+            'rendez_vous_id' => $request->rendez_vous_id,
+            'date'           => $request->date,
+            'symptomes'      => $request->symptomes,
+            'diagnostic'     => $request->diagnostic,
+            'compte_rendu'   => $request->compte_rendu,
         ]);
 
         return redirect()->route('consultation.index')->with('success', 'Consultation mise à jour.');

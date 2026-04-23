@@ -2,20 +2,13 @@
 <div class="max-w-7xl mx-auto py-8">
 
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Créer une Ordonnance</h1>
-        <a href="{{ route('medecin.consultations') }}" class="text-green-600 hover:underline text-sm">← Retour</a>
+        <h1 class="text-2xl font-bold text-gray-800">Modifier l'Ordonnance</h1>
+        <a href="{{ route('ordonnance.show', $ordonnance->id) }}" class="text-green-600 hover:underline text-sm">← Retour</a>
     </div>
 
-    <div class="bg-blue-50 rounded-xl p-4 mb-6 flex items-center gap-4">
-        <div class="bg-blue-600 text-white rounded-xl p-3">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-            </svg>
-        </div>
-        <div>
-            <p class="font-semibold text-gray-800">{{ $consultation->rendezVous->patient->user->nom }} {{ $consultation->rendezVous->patient->user->prenom }}</p>
-            <p class="text-sm text-gray-500">Consultation du {{ $consultation->date }} — {{ $consultation->diagnostic }}</p>
-        </div>
+    <div class="bg-blue-50 rounded-xl p-4 mb-6">
+        <p class="font-semibold text-gray-800">Réf: {{ $ordonnance->reference }}</p>
+        <p class="text-sm text-gray-500">{{ $ordonnance->date_ordonnance }}</p>
     </div>
 
     @if($errors->any())
@@ -29,10 +22,9 @@
     @endif
 
     <div class="bg-white rounded-xl shadow p-8">
-        <form action="{{ route('ordonnance.store', $consultation->id) }}" method="POST">
+        <form action="{{ route('ordonnance.update', $ordonnance->id) }}" method="POST">
             @csrf
-
-            <input type="hidden" name="date_ordonnance" value="{{ date('Y-m-d') }}">
+            @method('PUT')
 
             <div class="grid grid-cols-4 gap-3 mb-2 px-1">
                 <p class="text-xs font-semibold text-gray-500 uppercase">Médicament</p>
@@ -42,25 +34,30 @@
             </div>
 
             <div id="lignes_container">
+                @foreach($ordonnance->lignes as $i => $ligne)
                 <div class="grid grid-cols-4 gap-3 mb-3 ligne-row">
-                    <input type="text" name="lignes[0][medicament]" required placeholder="Ex: Paracétamol"
+                    <input type="text" name="lignes[{{ $i }}][medicament]" value="{{ $ligne->medicament }}" required
                         class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400">
-                    <input type="text" name="lignes[0][dose]" placeholder="Ex: 500mg"
+                    <input type="text" name="lignes[{{ $i }}][dose]" value="{{ $ligne->dose }}"
                         class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400">
-                    <input type="text" name="lignes[0][posologie]" placeholder="Ex: 3 fois/jour"
+                    <input type="text" name="lignes[{{ $i }}][posologie]" value="{{ $ligne->posologie }}"
                         class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400">
-                    <input type="text" name="lignes[0][duree]" placeholder="Ex: 7 jours"
-                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+                    <div class="flex gap-2">
+                        <input type="text" name="lignes[{{ $i }}][duree]" value="{{ $ligne->duree }}"
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+                        <button type="button" onclick="this.closest('.ligne-row').remove()"
+                            class="bg-red-100 text-red-600 px-3 rounded-lg text-sm font-bold">✕</button>
+                    </div>
                 </div>
+                @endforeach
             </div>
 
-            <button type="button" onclick="ajouterLigne()"
-                class="mb-6 text-sm text-green-600 hover:underline font-medium">
+            <button type="button" onclick="ajouterLigne()" class="mb-6 text-sm text-green-600 hover:underline font-medium">
                 + Ajouter un médicament
             </button>
 
-            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition">
-                Créer l'Ordonnance
+            <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg font-medium transition">
+                Mettre à jour
             </button>
         </form>
     </div>
@@ -68,7 +65,7 @@
 </x-app-layout>
 
 <script>
-    let index = 1;
+    let index = {{ $ordonnance->lignes->count() }};
     function ajouterLigne() {
         const container = document.getElementById('lignes_container');
         const div = document.createElement('div');

@@ -137,7 +137,7 @@ class PatientController extends Controller
 
         $consultations = Consultation::whereHas('rendezVous', function($q) use ($patient) {
             $q->where('patient_id', $patient->id);
-        })->with('rendezVous.medecin.user')->get();
+        })->with('rendezVous.medecin.user', 'ordonnances')->get();
 
         return view('patient.consultations', compact('consultations'));
     }

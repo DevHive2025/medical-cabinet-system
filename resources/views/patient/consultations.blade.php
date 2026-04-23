@@ -43,6 +43,28 @@
                         <p class="text-sm text-gray-800">{{ Str::limit($consultation->compte_rendu, 80) }}</p>
                     </div>
                 </div>
+
+                @if($consultation->ordonnances && $consultation->ordonnances->count() > 0)
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <p class="text-xs text-gray-500 font-medium mb-2">💊 Ordonnances :</p>
+                    <div class="flex flex-wrap gap-2">
+                        @foreach($consultation->ordonnances as $ordonnance)
+                        <a href="{{ route('ordonnance.show', $ordonnance->id) }}"
+                           class="inline-flex items-center gap-1 bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-2 rounded-lg transition font-medium">
+                            📄 {{ $ordonnance->reference }}
+                        </a>
+                        <a href="{{ route('ordonnance.telecharger', $ordonnance->id) }}"
+                           class="inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs px-3 py-2 rounded-lg transition font-medium">
+                            ⬇️ PDF
+                        </a>
+                        @endforeach
+                    </div>
+                </div>
+                @else
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <p class="text-xs text-gray-400">Aucune ordonnance pour cette consultation.</p>
+                </div>
+                @endif
             </div>
             @empty
             <div class="bg-white rounded-xl shadow p-12 text-center">

@@ -89,10 +89,13 @@ Route::middleware('auth')->group(function () {
     // Consultations & Ordonnances
     Route::get('/consultation/{id}/historique', [ConsultationController::class, 'historique'])->name('consultation.historique');
     Route::get('/consultation/{id}/pdf',        [ConsultationController::class, 'telechargerPDF'])->name('consultation.pdf');
-    Route::get('/ordonnance/{consultationId}/create', [OrdonnanceController::class, 'create'])->name('ordonnance.create');
-    Route::post('/ordonnance/{consultationId}/store', [OrdonnanceController::class, 'store'])->name('ordonnance.store');
-    Route::get('/ordonnance/{id}',                   [OrdonnanceController::class, 'show'])->name('ordonnance.show');
-    Route::get('/ordonnance/{id}/telecharger',        [OrdonnanceController::class, 'telecharger'])->name('ordonnance.telecharger');
+    Route::get('/ordonnance/{consultationId}/create',  [OrdonnanceController::class, 'create'])->name('ordonnance.create');
+    Route::post('/ordonnance/{consultationId}/store',   [OrdonnanceController::class, 'store'])->name('ordonnance.store');
+    Route::get('/ordonnance/{id}',                      [OrdonnanceController::class, 'show'])->name('ordonnance.show');
+    Route::get('/ordonnance/{id}/edit',                 [OrdonnanceController::class, 'edit'])->name('ordonnance.edit');
+    Route::put('/ordonnance/{id}',                      [OrdonnanceController::class, 'update'])->name('ordonnance.update');
+    Route::delete('/ordonnance/{id}',                   [OrdonnanceController::class, 'destroy'])->name('ordonnance.destroy');
+    Route::get('/ordonnance/{id}/telecharger',          [OrdonnanceController::class, 'telecharger'])->name('ordonnance.telecharger');
 });
 
 require __DIR__.'/auth.php';

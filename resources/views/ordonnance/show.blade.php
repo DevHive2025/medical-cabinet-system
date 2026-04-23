@@ -15,7 +15,24 @@
                     </svg>
                     Télécharger PDF
                 </a>
+                @if(auth()->user()->role !== 'patient')
+                <a href="{{ route('ordonnance.edit', $ordonnance->id) }}"
+                   class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                    Modifier
+                </a>
+                <form action="{{ route('ordonnance.destroy', $ordonnance->id) }}" method="POST">
+                    @csrf @method('DELETE')
+                    <button type="submit" onclick="return confirm('Supprimer cette ordonnance ?')"
+                        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                        Supprimer
+                    </button>
+                </form>
+                @endif
+                @if(auth()->user()->role === 'patient')
+                <a href="{{ route('patient.consultations') }}" class="text-green-600 hover:underline text-sm self-center">← Retour</a>
+                @else
                 <a href="{{ route('medecin.consultations') }}" class="text-green-600 hover:underline text-sm self-center">← Retour</a>
+                @endif
             </div>
         </div>
 

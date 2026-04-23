@@ -9,7 +9,7 @@ class Consultation extends Model
     protected $fillable = ['date', 'compte_rendu','symptomes', 'diagnostic', 'rendez_vous_id']; 
 
     public function ordonnances() {
-        return $this->hasOne(Ordonnance::class); 
+        return $this->hasMany(Ordonnance::class);
     }
 
     public function rendezVous() {

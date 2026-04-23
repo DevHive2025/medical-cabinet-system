@@ -9,25 +9,21 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrdonnanceController extends Controller
 {
-    // Formulaire création ordonnance
     public function create($consultationId)
     {
         $consultation = Consultation::with('rendezVous.patient.user')->findOrFail($consultationId);
         return view('ordonnance.create', compact('consultation'));
     }
 
-    // Enregistrer ordonnance
     public function store(Request $request, $consultationId)
     {
         $request->validate([
-            'date_ordonnance' => 'required|date',
-            'lignes'          => 'required|array|min:1',
-            'lignes.*.medicament'   => 'required|string',
-            'lignes.*.dose'       => 'nullable|string',
-            'lignes.*.psologie'      => 'nullable|string',
-            'lignes.*.duree'        => 'nullable|string',
-            'lignes.*.instructions' => 'nullable|string',
-        
+            'date_ordonnance'      => 'required|date',
+            'lignes'               => 'required|array|min:1',
+            'lignes.*.medicament'  => 'required|string',
+            'lignes.*.dose'        => 'nullable|string',
+            'lignes.*.posologie'   => 'nullable|string',
+            'lignes.*.duree'       => 'nullable|string',
         ]);
 
         $ordonnance = Ordonnance::create([
@@ -37,14 +33,18 @@ class OrdonnanceController extends Controller
         ]);
 
         foreach ($request->lignes as $ligne) {
-            $ordonnance->lignes()->create($ligne);
+            $ordonnance->lignes()->create([
+                'medicament' => $ligne['medicament'],
+                'dose'       => $ligne['dose']      ?? null,
+                'posologie'  => $ligne['posologie'] ?? null,
+                'duree'      => $ligne['duree']     ?? null,
+            ]);
         }
 
         return redirect()->route('consultation.show', $consultationId)
             ->with('success', 'Ordonnance créée avec succès.');
     }
 
-    // Afficher ordonnance
     public function show($id)
     {
         $ordonnance = Ordonnance::with(
@@ -56,7 +56,51 @@ class OrdonnanceController extends Controller
         return view('ordonnance.show', compact('ordonnance'));
     }
 
-    // Télécharger PDF
+    public function edit($id)
+    {
+        if (auth()->user()->role === 'patient') abort(403);
+        $ordonnance = Ordonnance::with('lignes', 'consultation')->findOrFail($id);
+        return view('ordonnance.edit', compact('ordonnance'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        if (auth()->user()->role === 'patient') abort(403);
+        $request->validate([
+            'lignes'               => 'required|array|min:1',
+            'lignes.*.medicament'  => 'required|string',
+            'lignes.*.dose'        => 'nullable|string',
+            'lignes.*.posologie'   => 'nullable|string',
+            'lignes.*.duree'       => 'nullable|string',
+        ]);
+
+        $ordonnance = Ordonnance::findOrFail($id);
+        $ordonnance->lignes()->delete();
+
+        foreach ($request->lignes as $ligne) {
+            $ordonnance->lignes()->create([
+                'medicament' => $ligne['medicament'],
+                'dose'       => $ligne['dose']      ?? null,
+                'posologie'  => $ligne['posologie'] ?? null,
+                'duree'      => $ligne['duree']     ?? null,
+            ]);
+        }
+
+        return redirect()->route('ordonnance.show', $id)
+            ->with('success', 'Ordonnance mise à jour.');
+    }
+
+    public function destroy($id)
+    {
+        if (auth()->user()->role === 'patient') abort(403);
+        $ordonnance = Ordonnance::findOrFail($id);
+        $consultationId = $ordonnance->consultation_id;
+        $ordonnance->delete();
+
+        return redirect()->route('consultation.show', $consultationId)
+            ->with('success', 'Ordonnance supprimée.');
+    }
+
     public function telecharger($id)
     {
         $ordonnance = Ordonnance::with(
@@ -66,6 +110,9 @@ class OrdonnanceController extends Controller
         )->findOrFail($id);
 
         $pdf = Pdf::loadView('ordonnance.pdf', compact('ordonnance'));
-        return $pdf->download('ordonnance-' . $ordonnance->reference . '.pdf');
+        return response($pdf->output(), 200, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="ordonnance-' . $ordonnance->reference . '.pdf"',
+        ]);
     }
 }
