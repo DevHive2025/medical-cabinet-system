@@ -32,19 +32,34 @@
         </div>
     </div>
     <div class="grid grid-cols-2 gap-4">
-        <!-- EMAIL -->
-        <div>
-            <x-input-label for="email" value="Email" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
+        
         <!-- TELEPHONE -->
         <div>
             <x-input-label for="telephone" value="Téléphone" />
             <x-text-input id="telephone" class="block mt-1 w-full" type="text" name="telephone" :value="old('telephone')" required />
             <x-input-error :messages="$errors->get('telephone')" class="mt-2" />
         </div>
+        <div>
+            <x-input-label value="Genre" />
+            <div class="flex gap-4 mt-2">
+                <label class="flex items-center">
+                    <input type="radio" name="genre" value="homme" {{ old('genre') == 'homme' ? 'checked' : '' }} required>
+                    <span class="ml-2">Homme</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="radio" name="genre" value="femme" {{ old('genre') == 'femme' ? 'checked' : '' }}>
+                    <span class="ml-2">Femme</span>
+                </label>
+            </div>
+            <x-input-error :messages="$errors->get('genre')" class="mt-2" />
+        </div>
+    </div>
+    <!-- EMAIL -->
+    <div>
+        <x-input-label for="email" value="Email" />
+        <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+        <x-input-error :messages="$errors->get('email')" class="mt-2" />
     </div>
     <div class="grid grid-cols-2 gap-4">
         <!-- PASSWORD -->

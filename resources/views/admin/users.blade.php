@@ -1,9 +1,61 @@
 <x-app-layout>
 
 <div class="p-1">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
 
+    <div class="bg-white border border-gray-200 rounded-2xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition">
+        <div>
+            <p class="text-gray-400 text-sm font-medium">Total utilisateurs</p>
+            <h2 class="text-2xl font-bold text-gray-800">{{ $stats['total'] }}</h2>
+        </div>
+        <div class="bg-gray-100 text-gray-600 p-3 rounded-xl">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="bg-white border border-gray-200 rounded-2xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition">
+    <div>
+        <p class="text-gray-400 text-sm font-medium">Médecins</p>
+        <h2 class="text-2xl font-bold text-emerald-600">{{ $stats['medecins'] }}</h2>
+    </div>
+    <div class="bg-emerald-50 text-emerald-600 p-3 rounded-xl">
+       <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 10.5h.375c.621 0 1.125.504 1.125 1.125v3c0 .621-.504 1.125-1.125 1.125h-.375M19.5 10.5v5.25m0-5.25V9a2.25 2.25 0 0 0-2.25-2.25h-.375" />
+</svg>
+    </div>
+</div>
+
+    <div class="bg-white border border-gray-200 rounded-2xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition">
+        <div>
+            <p class="text-gray-400 text-sm font-medium">Secrétaires</p>
+            <h2 class="text-2xl font-bold text-purple-600">{{ $stats['secretaires'] }}</h2>
+        </div>
+        <div class="bg-purple-100 text-purple-600 p-3 rounded-xl">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+        </div>
+    </div>
+
+    <div class="bg-white border border-gray-200 rounded-2xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition">
+        <div>
+            <p class="text-gray-400 text-sm font-medium">Patients</p>
+            <h2 class="text-2xl font-bold text-blue-600">{{ $stats['patients'] }}</h2>
+        </div>
+        <div class="bg-blue-100 text-blue-600 p-3 rounded-xl">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+        </div>
+    </div>
+
+</div>
     <!-- HEADER -->
     <div class="p-1">
+        
     <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-3 text-gray-800 font-semibold text-lg">
             <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,7 +83,7 @@
                 <option value="patient">Patient</option>
             </select>
 
-            <a href="{{ route('users.create') }}" class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r bg-blue-600 hover:opacity-90 transition-all shadow-md">
+            <a href="{{ route('admin.users.create') }}" class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r bg-blue-600 hover:opacity-90 transition-all shadow-md">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
@@ -124,7 +176,7 @@
                     <td class="px-6 py-4 text-right">
     <div class="flex justify-end gap-1">
 
-        <a href="{{ route('users.show', $user) }}" 
+        <a href="{{ route('admin.users.show', $user) }}" 
    title="Voir" 
    class="p-2 rounded-lg text-gray-400 hover:bg-indigo-50 hover:text-indigo-600 transition-all duration-200">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -133,13 +185,13 @@
     </svg>
 </a>
 
-        <a href="{{ route('users.edit', $user) }}" title="Modifier" class="p-2 rounded-lg text-gray-400 hover:bg-green-50 hover:text-green-600 transition-all duration-200">
+        <a href="{{ route('admin.users.edit', $user) }}" title="Modifier" class="p-2 rounded-lg text-gray-400 hover:bg-green-50 hover:text-green-600 transition-all duration-200">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
             </svg>
         </a>
 
-        <form action="{{ route('users.destroy', $user) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.');" class="inline">
+        <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.');" class="inline">
             @csrf
             @method('DELETE')
             <button type="submit" title="Supprimer" class="p-2 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all duration-200">

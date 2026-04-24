@@ -18,10 +18,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all(); 
+        $users = User::where('role', '!=', 'admin')->get();; 
         
         $stats = [
-            'total' => User::count(),
+            'total' => $users->count(),
             'medecins' => Medecin::count(),
             'secretaires' => Secretaire::count(),
             'patients' => Patient::count(), 

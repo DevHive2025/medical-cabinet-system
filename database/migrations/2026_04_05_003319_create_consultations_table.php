@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('compte_rendu');
             $table->string('diagnostic');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

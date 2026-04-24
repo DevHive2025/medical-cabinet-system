@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('reference')->unique();
             $table->date('date_ordonnance');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

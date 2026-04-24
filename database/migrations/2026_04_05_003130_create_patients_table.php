@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('date_naissance'); 
             $table->string('telephone'); 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

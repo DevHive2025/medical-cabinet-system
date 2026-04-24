@@ -5,7 +5,7 @@
                 <h1 class="text-2xl font-bold text-gray-800">Modifier le profil</h1>
                 <p class="text-gray-500 text-sm italic">Mise à jour des informations de {{ $user->nom }} {{ $user->prenom }}</p>
             </div>
-            <a href="{{ route('users.index') }}" class="flex items-center text-gray-400 hover:text-indigo-600 transition group font-medium">
+            <a href="{{ route('admin.users.index') }}" class="flex items-center text-gray-400 hover:text-indigo-600 transition group font-medium">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
@@ -13,7 +13,7 @@
             </a>
         </div>
 
-        <form action="{{ route('users.update', $user->id) }}" method="POST" class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+        <form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
             @csrf
             @method('PUT')
 

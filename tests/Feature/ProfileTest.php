@@ -22,26 +22,29 @@ class ProfileTest extends TestCase
     }
 
     public function test_profile_information_can_be_updated(): void
-    {
-        $user = User::factory()->create();
+{
+    $user = User::factory()->create();
 
-        $response = $this
-            ->actingAs($user)
-            ->patch('/profile', [
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-            ]);
+    $response = $this
+        ->actingAs($user)
+        ->patch('/profile', [
+            'nom' => 'Ait Saleh',    // On envoie 'Ait Saleh'
+            'prenom' => 'Amine',     // On envoie 'Amine'
+            'email' => 'test@example.com',
+        ]);
 
-        $response
-            ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertRedirect('/profile');
 
-        $user->refresh();
+    $user->refresh();
 
-        $this->assertSame('Test User', $user->name);
-        $this->assertSame('test@example.com', $user->email);
-        $this->assertNull($user->email_verified_at);
-    }
+    // On vérifie qu'on retrouve BIEN les mêmes valeurs en base de données
+    $this->assertSame('Ait Saleh', $user->nom); 
+    $this->assertSame('Amine', $user->prenom);
+    $this->assertSame('test@example.com', $user->email);
+    $this->assertNull($user->email_verified_at);
+}
 
     public function test_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
     {
@@ -50,7 +53,8 @@ class ProfileTest extends TestCase
         $response = $this
             ->actingAs($user)
             ->patch('/profile', [
-                'name' => 'Test User',
+                'nom' => 'Test User',
+                'prenom' => 'User',
                 'email' => $user->email,
             ]);
 

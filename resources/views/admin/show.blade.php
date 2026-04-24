@@ -10,7 +10,7 @@
     </div>
     
     <div class="flex items-center gap-3">
-        <a href="{{ route('users.index') }}" 
+        <a href="{{ route('admin.users.index') }}" 
            class="group inline-flex items-center px-4 py-2 bg-white border border-gray-200 text-gray-600 text-sm font-semibold rounded-xl shadow-sm hover:bg-gray-50 hover:text-indigo-600 hover:border-indigo-200 transition-all duration-200 ease-in-out">
             <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform duration-200" 
                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -19,7 +19,7 @@
             Retour à la liste
         </a>
         
-        <a href="{{ route('users.edit', $user->id) }}" 
+        <a href="{{ route('admin.users.edit', $user->id) }}" 
            class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-xl shadow-md hover:bg-indigo-700 hover:shadow-indigo-200 transition-all duration-200">
             <i class="fas fa-user-edit mr-2 text-xs text-indigo-100"></i>
             Modifier

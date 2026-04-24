@@ -18,17 +18,17 @@ class UserSeeder extends Seeder
         $medecinsData = [
             ['nom' => 'Alami',    'prenom' => 'Dr. Yassine', 'email' => 'y.alami@gmail.com',    'specialite' => 'Cardiologie',       'tel' => '0661998877'],
             ['nom' => 'Berrada',  'prenom' => 'Dr. Leila',   'email' => 'l.berrada@gmail.com',  'specialite' => 'Médecine Générale', 'tel' => '0661887766'],
-            ['nom' => 'Tahiri',   'prenom' => 'Dr. Karim',   'email' => 'k.tahiri@gmail.com',   'specialite' => 'Pédiatrie',         'tel' => '0662334455'],
+            ['nom' => 'Tahiri',   'prenom' => 'Dr. Karim',   'email' => 'k.tahiri@gmail.com',   'specialite' => 'Médecine Générale', 'tel' => '0662334455'],
             ['nom' => 'Mansouri', 'prenom' => 'Dr. Nadia',   'email' => 'n.mansouri@gmail.com', 'specialite' => 'Dermatologie',      'tel' => '0663445566'],
-            ['nom' => 'Filali',   'prenom' => 'Dr. Hassan',  'email' => 'h.filali@gmail.com',   'specialite' => 'Neurologie',        'tel' => '0664556677'],
+            ['nom' => 'Filali',   'prenom' => 'Dr. Hassan',  'email' => 'h.filali@gmail.com',   'specialite' => 'Cardiologie',       'tel' => '0664556677'],
             ['nom' => 'Benali',   'prenom' => 'Dr. Sara',    'email' => 's.benali@gmail.com',   'specialite' => 'Gynécologie',       'tel' => '0665667788'],
-            ['nom' => 'Kettani',  'prenom' => 'Dr. Omar',    'email' => 'o.kettani@gmail.com',  'specialite' => 'Ophtalmologie',     'tel' => '0666778899'],
-            ['nom' => 'Rahimi',   'prenom' => 'Dr. Zineb',   'email' => 'z.rahimi@gmail.com',   'specialite' => 'Rhumatologie',      'tel' => '0667889900'],
+            ['nom' => 'Kettani',  'prenom' => 'Dr. Omar',    'email' => 'o.kettani@gmail.com',  'specialite' => 'Dermatologie',      'tel' => '0666778899'],
+            ['nom' => 'Rahimi',   'prenom' => 'Dr. Zineb',   'email' => 'z.rahimi@gmail.com',   'specialite' => 'Médecine Générale', 'tel' => '0667889900'],
         ];
         foreach ($medecinsData as $data) {
             $u = User::create([
                 'nom' => $data['nom'], 'prenom' => $data['prenom'],
-                'email' => $data['email'], 'password' => Hash::make('password123'), 'role' => 'medecin'
+                'email' => $data['email'], 'password' => Hash::make('password'), 'role' => 'medecin'
             ]);
             $u->medecin()->create(['specialite' => $data['specialite'], 'cabinet_telephone' => $data['tel']]);
         }
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
         foreach ($secretairesData as $data) {
             $u = User::create([
                 'nom' => $data['nom'], 'prenom' => $data['prenom'],
-                'email' => $data['email'], 'password' => Hash::make('password123'), 'role' => 'secretaire'
+                'email' => $data['email'], 'password' => Hash::make('password'), 'role' => 'secretaire'
             ]);
             $u->secretaire()->create(['bureau' => $data['bureau']]);
         }

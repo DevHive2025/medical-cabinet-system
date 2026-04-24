@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('specialite'); 
             $table->string('cabinet_telephone');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

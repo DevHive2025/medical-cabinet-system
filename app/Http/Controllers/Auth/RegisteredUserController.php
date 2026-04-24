@@ -38,6 +38,7 @@ class RegisteredUserController extends Controller
             'cin' => ['required', 'string', 'max:255', 'unique:patients,cin'],
             'date_naissance' => ['required', 'date'],
             'telephone' => ['required', 'string', 'max:20'],
+            'genre' => ['required', 'string', 'in:homme,femme'],
 
         ]);
 
@@ -52,7 +53,7 @@ class RegisteredUserController extends Controller
             'cin' => $request->cin,
             'date_naissance' => $request->date_naissance,
             'telephone' => $request->telephone,
-            'genre' => 'homme', // Valeur par défaut, peut être modifiée plus tard
+            'genre' => $request->genre, 
         ]);
 
         event(new Registered($user));
