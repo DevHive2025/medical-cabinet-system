@@ -51,69 +51,67 @@ class OrdonnanceTest extends TestCase
 
     public function test_medecin_can_create_ordonnance_with_lignes()
     {
-        // $medecinUser = User::factory()->create(['role' => 'medecin']);
-        // $consultation = $this->createConsultation();
+        $medecinUser = User::factory()->create(['role' => 'medecin']);
+        $consultation = $this->createConsultation();
 
-        // $ordonnanceData = [
-        //     'consultation_id' => $consultation->id,
-        //     'lignes' => [
-        //         [
-        //             'medicament' => 'Doliprane',
-        //             'dose' => '1000mg',
-        //             'posologie' => '1 matin, 1 soir',
-        //             'duree' => '3 jours',
-        //         ],
-        //         [
-        //             'medicament' => 'Amoxicilline',
-        //             'dose' => '500mg',
-        //             'posologie' => '1 matin, 1 midi, 1 soir',
-        //             'duree' => '7 jours',
-        //         ]
-        //     ]
-        // ];
+        $ordonnanceData = [
+            'consultation_id' => $consultation->id,
+            'lignes' => [
+                [
+                    'medicament' => 'Doliprane',
+                    'dose' => '1000mg',
+                    'posologie' => '1 matin, 1 soir',
+                    'duree' => '3 jours',
+                ],
+                [
+                    'medicament' => 'Amoxicilline',
+                    'dose' => '500mg',
+                    'posologie' => '1 matin, 1 midi, 1 soir',
+                    'duree' => '7 jours',
+                ]
+            ]
+        ];
 
-        // $response = $this->actingAs($medecinUser)->post(route('ordonnance.store', $consultation->id), $ordonnanceData);
+        $response = $this->actingAs($medecinUser)->post(route('ordonnance.store', $consultation->id), $ordonnanceData);
 
-        // $response->assertStatus(302); 
+        $response->assertStatus(302); 
         
-        // $this->assertDatabaseHas('ordonnances', [
-        //     'consultation_id' => $consultation->id,
-        // ]);
+        $this->assertDatabaseHas('ordonnances', [
+            'consultation_id' => $consultation->id,
+        ]);
 
-        // $ordonnance = Ordonnance::where('consultation_id', $consultation->id)->first();
+        $ordonnance = Ordonnance::where('consultation_id', $consultation->id)->first();
 
-        // $this->assertDatabaseHas('ordonnance_lignes', [
-        //     'ordonnance_id' => $ordonnance->id,
-        //     'medicament' => 'Doliprane',
-        //     'dose' => '1000mg',
-        // ]);
-        $response = $this->get('/');
-        $response->assertStatus(200);
+        $this->assertDatabaseHas('ordonnance_lignes', [
+            'ordonnance_id' => $ordonnance->id,
+            'medicament' => 'Doliprane',
+            'dose' => '1000mg',
+        ]);
+
     }
 
     public function test_medecin_can_export_ordonnance_pdf()
     {
-        // $medecinUser = User::factory()->create(['role' => 'medecin']);
-        // $consultation = $this->createConsultation();
+        $medecinUser = User::factory()->create(['role' => 'medecin']);
+        $consultation = $this->createConsultation();
         
-        // $ordonnance = Ordonnance::create([
-        //     'consultation_id' => $consultation->id,
-        //     'reference' => 'ORD-' . date('YmdHis'),
-        //     'date_ordonnance' => now()->toDateString(),
-        // ]);
+        $ordonnance = Ordonnance::create([
+            'consultation_id' => $consultation->id,
+            'reference' => 'ORD-' . date('YmdHis'),
+            'date_ordonnance' => now()->toDateString(),
+        ]);
         
-        // OrdonnanceLigne::create([
-        //     'ordonnance_id' => $ordonnance->id,
-        //     'medicament' => 'Doliprane',
-        //     'dose' => '1000mg',
-        //     'posologie' => '1/j',
-        //     'duree' => '3 jours',
-        // ]);
+        OrdonnanceLigne::create([
+            'ordonnance_id' => $ordonnance->id,
+            'medicament' => 'Doliprane',
+            'dose' => '1000mg',
+            'posologie' => '1/j',
+            'duree' => '3 jours',
+        ]);
 
-        // $response = $this->actingAs($medecinUser)->get(route('ordonnance.telecharger', $ordonnance->id));
+        $response = $this->actingAs($medecinUser)->get(route('ordonnance.telecharger', $ordonnance->id));
 
-        // $response->assertStatus(200);
-        $response = $this->get('/');
         $response->assertStatus(200);
+        
     }
 }

@@ -156,34 +156,32 @@ class RendezVousTest extends TestCase
 
     public function test_email_de_confirmation_est_envoye()
     {
-        // Mail::fake();
+        Mail::fake();
 
-        // $user = User::factory()->create(['role' => 'patient']);
-        // $medecin = $this->createMedecin();
-        // $patient = Patient::create([
-        //     'user_id' => $user->id,
-        //     'cin' => 'TEST123',
-        //     'genre' => 'Homme',
-        //     'date_naissance' => '1990-01-01',
-        //     'telephone' => '0600000000',
-        // ]);
+        $user = User::factory()->create(['role' => 'patient']);
+        $medecin = $this->createMedecin();
+        $patient = Patient::create([
+            'user_id' => $user->id,
+            'cin' => 'TEST123',
+            'genre' => 'Homme',
+            'date_naissance' => '1990-01-01',
+            'telephone' => '0600000000',
+        ]);
 
-        // $rdv = RendezVous::create([
-        //     'patient_id' => $patient->id,
-        //     'medecin_id' => $medecin->id,
-        //     'motif' => 'Consultation',
-        //     'date_heure' => '2026-05-10 10:00:00',
-        //     'statut' => 'en_attente'
-        // ]);
+        $rdv = RendezVous::create([
+            'patient_id' => $patient->id,
+            'medecin_id' => $medecin->id,
+            'motif' => 'Consultation',
+            'date_heure' => '2026-05-10 10:00:00',
+            'statut' => 'en_attente'
+        ]);
 
-        // $this->actingAs($user)->get(route('rendez-vous.confirmer', $rdv->id));
+        $this->actingAs($user)->get(route('rendez-vous.confirmer', $rdv->id));
 
-        // Mail::assertSent(ConfirmationRendezVous::class, function ($mail) use ($user) {
-        //     return $mail->hasTo($user->email);
-        // });
+        Mail::assertSent(ConfirmationRendezVous::class, function ($mail) use ($user) {
+            return $mail->hasTo($user->email);
+        });
         
-            $response = $this->get('/');
-            $this->assertTrue(true);
     }
 
     public function test_email_de_rappel_est_envoye_via_commande()
