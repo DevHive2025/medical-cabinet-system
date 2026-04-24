@@ -5,6 +5,7 @@
             &larr; Retour à la liste classique
         </a>
     </div>
+<<<
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         <div class="bg-white rounded-2xl shadow p-6 h-max">
@@ -13,8 +14,8 @@
                     {{ ucfirst($selectedDate->translatedFormat('F Y')) }}
                 </h3>
                 <div class="flex space-x-2">
-                    <a href="{{ route('medecin.calendrier', ['date' => $selectedDate->copy()->subMonth()->format('Y-m-d')]) }}" class="p-2 hover:bg-gray-100 rounded-full text-gray-600">&lt;</a>
-                    <a href="{{ route('medecin.calendrier', ['date' => $selectedDate->copy()->addMonth()->format('Y-m-d')]) }}" class="p-2 hover:bg-gray-100 rounded-full text-gray-600">&gt;</a>
+                    <a href="{{ route('rendez-vous.calendrier', ['date' => $selectedDate->copy()->subMonth()->format('Y-m-d')]) }}" class="p-2 hover:bg-gray-100 rounded-full text-gray-600">&lt;</a>
+                    <a href="{{ route('rendez-vous.calendrier', ['date' => $selectedDate->copy()->addMonth()->format('Y-m-d')]) }}" class="p-2 hover:bg-gray-100 rounded-full text-gray-600">&gt;</a>
                 </div>
             </div>
 
@@ -40,7 +41,7 @@
                         $hasRdv = in_array($currentDayDate, $rdvsMois);
                     @endphp
 
-                    <a href="{{ route('medecin.calendrier', ['date' => $currentDayDate]) }}" 
+                    <a href="{{ route('rendez-vous.calendrier', ['date' => $currentDayDate]) }}" 
                        class="relative flex flex-col items-center justify-center w-8 h-8 mx-auto rounded-full cursor-pointer transition 
                        {{ $isSelected ? 'bg-green-600 text-white font-bold shadow-md' : 'text-gray-700 hover:bg-green-50' }}">
                         
